@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a6e34a53a179f490286c7f9a5a46f2f2
+timeCreated: 1525335460
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Yesteryear
+  fontNames:
+  - Yesteryear
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
