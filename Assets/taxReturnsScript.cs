@@ -623,4 +623,35 @@ public class taxReturnsScript : MonoBehaviour
             }
         }
     }
+
+	#pragma warning disable 414
+	private string TwitchHelpMessage = "Submit your taxes using !{0} submit <number>.";
+	#pragma warning restore 414
+
+	IEnumerator ProcessTwitchCommand(string inputCommand)
+	{
+		inputCommand = System.Text.RegularExpressions.Regex.Replace(inputCommand.ToLowerInvariant(), "^(submit|enter|give|return|pay) £?", "");
+
+		int number; // Used to check that someone is submitting both a number and that it's not negitive.
+		if (inputCommand.Length > 0 && inputCommand.Length <= 7 && int.TryParse(inputCommand, out number) && number > 0)
+		{
+			yield return null;
+
+			toggleSwitch.OnInteract();
+			yield return new WaitForSeconds(0.2f);
+
+			foreach (KMSelectable button in inputCommand.TrimStart('0').ToCharArray().Select(digit => keypad[digit - '0']))
+			{
+				button.OnInteract();
+				yield return new WaitForSeconds(0.2f);
+			}
+
+			submitBut.OnInteract();
+
+			// TP stops execution on a strike but since we don't yield between submitting, we can turn the module back over.
+			if (enteredText != correctAnswer) toggleSwitch.OnInteract();
+
+			yield return new WaitForSeconds(0.2f);
+		}
+	}
 }
