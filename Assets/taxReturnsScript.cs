@@ -308,15 +308,15 @@ public class taxReturnsScript : MonoBehaviour
     public void GetTaxFreeInvestments()
     {
         uniquePorts = Bomb.CountUniquePorts();
-        if (niNumber.text[10] == 'A' || niNumber.text[10] == 'C' && surnameIndex < 26 && payrollDigit % 2 == 1)
+        if ((niNumber.text[10] == 'A' || niNumber.text[10] == 'C') && surnameIndex < 26 && payrollDigit % 2 == 1)
         {
             portfolio = 932;
         }
-        else if (niNumber.text[10] == 'A' || niNumber.text[10] == 'C' && surnameIndex < 26)
+        else if ((niNumber.text[10] == 'A' || niNumber.text[10] == 'C') && surnameIndex < 26)
         {
             portfolio = 478;
         }
-        else if (niNumber.text[10] == 'A' || niNumber.text[10] == 'C' && payrollDigit % 2 == 1)
+        else if ((niNumber.text[10] == 'A' || niNumber.text[10] == 'C') && payrollDigit % 2 == 1)
         {
             portfolio = 736;
         }
