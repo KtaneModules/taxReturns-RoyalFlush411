@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using taxReturns;
+using System.Text.RegularExpressions;
 
 public class taxReturnsScript : MonoBehaviour
 {
@@ -630,10 +631,11 @@ public class taxReturnsScript : MonoBehaviour
 
 	IEnumerator ProcessTwitchCommand(string inputCommand)
 	{
-		inputCommand = System.Text.RegularExpressions.Regex.Replace(inputCommand.ToLowerInvariant(), "^(submit|enter|give|return|pay) £?", "");
+		inputCommand = inputCommand.ToLowerInvariant();
+		Match match;
 
-		int number; // Used to check that someone is submitting both a number and that it's not negitive.
-		if (inputCommand.Length > 0 && inputCommand.Length <= 7 && int.TryParse(inputCommand, out number) && number > 0)
+		int number;
+		if ((match = Regex.Match(inputCommand, @"^(?:submit|enter|give|return|pay) £? (\d{1,7})$")).Success && int.TryParse(inputCommand, out number))
 		{
 			yield return null;
 
@@ -652,6 +654,20 @@ public class taxReturnsScript : MonoBehaviour
 			if (enteredText != correctAnswer) toggleSwitch.OnInteract();
 
 			yield return new WaitForSeconds(0.2f);
+		}
+		else if ((match = Regex.Match(inputCommand, @"^(left|right) (\d+)$")).Success && int.TryParse(match.Groups[2].Value, out number))
+		{
+			number %= 4;
+			if (number == 0) yield break;
+
+			yield return null;
+
+			KMSelectable pageButton = match.Groups[1].Value == "left" ? pageLeft : pageRight;
+			for (int i = 0; i < number; i++)
+			{
+				pageButton.OnInteract();
+				yield return new WaitForSeconds(0.1f);
+			}
 		}
 	}
 }
