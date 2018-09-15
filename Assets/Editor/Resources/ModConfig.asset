@@ -13,10 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: taxReturns
   title: Tax Returns
-  description: "Tax Returns 1.12\nI\u2019m not going to lie; now is probably not the
+  description: "Tax Returns 1.13\nI\u2019m not going to lie; now is probably not the
     best time to be getting on top of your paperwork...\n\nModule ID: taxReturns\n\nCreated
     by: Royal_Flu$h\nTwitchPlays implemented by: Samfun123\n\nThanks to Livio for
     the manual image.\n\nManual available here: https://ktane.timwi.de/HTML/Tax%20Returns.html"
-  version: 1.12
+  version: 1.13
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 93ccafd51930c4b8fa261461317ecee7, type: 3}

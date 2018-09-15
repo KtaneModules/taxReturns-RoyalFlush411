@@ -160,7 +160,6 @@ public class taxReturnsScript : MonoBehaviour
             monthIncreaser++;
         }
         monthIncreaser = 0;
-        StartCoroutine(deadlineCoroutine());
         GetTurnover();
         GetExpenses();
         GetGrossTurnover();
@@ -174,6 +173,12 @@ public class taxReturnsScript : MonoBehaviour
         totalTaxBill = totalIncomeTax + nationalInsurance;
         Debug.LogFormat("[Tax Returns #{0}] YOUR TOTAL TAX BILL IS £{1}.", moduleId, totalTaxBill);
         correctAnswer = totalTaxBill.ToString();
+        GetComponent<KMBombModule>().OnActivate += OnActivate;
+    }
+
+    void OnActivate()
+    {
+        StartCoroutine(deadlineCoroutine());
     }
 
     private IEnumerator deadlineCoroutine()
