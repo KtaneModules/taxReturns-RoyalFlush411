@@ -631,7 +631,7 @@ public class taxReturnsScript : MonoBehaviour
     }
 
 	#pragma warning disable 414
-	private string TwitchHelpMessage = "Submit your taxes using !{0} submit <number>. Page left and right using !{0} left <number> and !{0} right <number.";
+	private string TwitchHelpMessage = "Submit your taxes using !{0} submit <number>. Page left and right using !{0} left (number) and !{0} right (number).";
 	#pragma warning restore 414
 
 	IEnumerator ProcessTwitchCommand(string inputCommand)
@@ -639,18 +639,17 @@ public class taxReturnsScript : MonoBehaviour
 		inputCommand = inputCommand.ToLowerInvariant();
 		Match match;
 
-		int number;
-		if ((match = Regex.Match(inputCommand, @"^(?:submit|enter|give|return|pay) £? (\d{1,7})$")).Success && int.TryParse(inputCommand, out number))
+		if ((match = Regex.Match(inputCommand, @"^(?:submit|enter|give|return|pay) £?(\d{1,7})$")).Success)
 		{
 			yield return null;
 
 			toggleSwitch.OnInteract();
 			yield return new WaitForSeconds(0.2f);
 
-			foreach (KMSelectable button in inputCommand.TrimStart('0').ToCharArray().Select(digit => keypad[digit - '0']))
+			foreach (KMSelectable button in match.Groups[1].Value.TrimStart('0').ToCharArray().Select(digit => keypad[digit - '0']))
 			{
 				button.OnInteract();
-				yield return new WaitForSeconds(0.2f);
+				yield return new WaitForSeconds(0.1f);
 			}
 
 			submitBut.OnInteract();
@@ -660,8 +659,14 @@ public class taxReturnsScript : MonoBehaviour
 
 			yield return new WaitForSeconds(0.2f);
 		}
-		else if ((match = Regex.Match(inputCommand, @"^(left|right) (\d+)$")).Success && int.TryParse(match.Groups[2].Value, out number))
+		else if ((match = Regex.Match(inputCommand, @"^(left|right)(?: (\d+))?$")).Success)
 		{
+			int number;
+			if (!match.Groups[2].Success)
+				number = 1;
+			else if (!int.TryParse(match.Groups[2].Value, out number))
+				yield break;
+
 			number %= 4;
 			if (number == 0) yield break;
 
