@@ -111,6 +111,8 @@ public class taxReturnsScript : MonoBehaviour
     private int additionalNI = 0;
     private int totalTaxBill = 0;
     private string correctAnswer = "";
+    private string correctAnswer2 = "";
+    private string correctAnswer3 = "";
 
     //Logging
     static int moduleIdCounter = 1;
@@ -173,6 +175,8 @@ public class taxReturnsScript : MonoBehaviour
         totalTaxBill = totalIncomeTax + nationalInsurance;
         Debug.LogFormat("[Tax Returns #{0}] YOUR TOTAL TAX BILL IS £{1}.", moduleId, totalTaxBill);
         correctAnswer = totalTaxBill.ToString();
+        correctAnswer2 = (totalTaxBill + 1).ToString();
+        correctAnswer3 = (totalTaxBill - 1).ToString();
         GetComponent<KMBombModule>().OnActivate += OnActivate;
     }
 
@@ -613,17 +617,17 @@ public class taxReturnsScript : MonoBehaviour
         }
         else
         {
-            if (enteredText == correctAnswer)
+            if (enteredText == correctAnswer || enteredText == correctAnswer2 || enteredText == correctAnswer3)
             {
                 Audio.PlaySoundAtTransform("correct", transform);
                 GetComponent<KMBombModule>().HandlePass();
-                Debug.LogFormat("[Tax Returns #{0}] You have paid £{1}. Thank you for using HMRC self assessment. Module disarmed.", moduleId, correctAnswer);
+                Debug.LogFormat("[Tax Returns #{0}] You have paid within £1 of £{1}. Thank you for using HMRC self assessment. Module disarmed.", moduleId, correctAnswer);
                 moduleSolved = true;
             }
-            else if (enteredText != correctAnswer)
+            else
             {
                 GetComponent<KMBombModule>().HandleStrike();
-                Debug.LogFormat("[Tax Returns #{0}] Strike! You have tried to pay £{1}. I was expecting £{2}. Please check your figures and re-submit your return.", moduleId, enteredText, correctAnswer);
+                Debug.LogFormat("[Tax Returns #{0}] Strike! You have tried to pay £{1}. I was expecting within £1 of £{2}. Please check your figures and re-submit your return.", moduleId, enteredText, correctAnswer);
                 enteredText = "";
                 amount.text = enteredText;
             }
