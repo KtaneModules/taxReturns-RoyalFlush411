@@ -631,7 +631,7 @@ public class taxReturnsScript : MonoBehaviour
     }
 
 	#pragma warning disable 414
-	private string TwitchHelpMessage = "Submit your taxes using !{0} submit <number>.";
+	private string TwitchHelpMessage = "Submit your taxes using !{0} submit <number>. Page left and right using !{0} left <number> and !{0} right <number.";
 	#pragma warning restore 414
 
 	IEnumerator ProcessTwitchCommand(string inputCommand)
